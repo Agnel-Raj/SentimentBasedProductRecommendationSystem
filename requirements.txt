@@ -1,0 +1,10 @@
+Flask
+Jinja2
+gunicorn
+nltk
+pandas
+scikit-learn
+scipy
+numpy
+pickleshare
+spacy
