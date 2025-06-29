@@ -6,7 +6,9 @@ sentiment_model = SentimentRecommenderModel()
 
 @app.route('/')
 def home():
-
+    import os
+    print("CWD:", os.getcwd())
+    print("Templates contents:", os.listdir("templates") if os.path.exists("templates") else "Templates folder not found!")
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
