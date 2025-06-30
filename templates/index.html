@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,25 +10,13 @@
       padding-top: 80px;
       background-color: #f8f9fa;
     }
-
-    .container {
-      max-width: 1000px;
-    }
-
-    .title {
-      font-size: 2rem;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
     textarea {
       resize: none;
     }
   </style>
 </head>
-
 <body>
+  <!-- Updated Navbar -->
   <nav class="navbar fixed-top shadow" style="background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);">
     <div class="container">
       <a class="navbar-brand text-white fw-bold fs-5" href="#">
@@ -38,16 +25,16 @@
     </div>
   </nav>
 
-  <div class="container mt-4">
-    <div class="row">
+  <div class="container-fluid mt-4">
+    <div class="row gx-5 align-items-start">
+      
       <!-- Left Column: Recommendation Form -->
-      <div class="col-md-6 mb-4">
+      <div class="col-md-6 mb-4 d-flex flex-column">
         <h4 class="mb-3">Get Product Recommendations</h4>
         <form action="/predict" method="post">
           <div class="mb-3">
             <label for="userName" class="form-label">Enter Username</label>
-            <input class="form-control" type="text" id="userName" name="userName"
-              placeholder="e.g. jessica, samantha, agnel" required>
+            <input class="form-control" type="text" id="userName" name="userName" placeholder="e.g., 02dakota, 123charlie" required>
             <small class="form-text text-muted">Enter a valid username from the dataset.</small>
           </div>
           <input type="submit" class="btn btn-primary" value="Get Recommendations">
@@ -55,27 +42,29 @@
 
         {% if row_data %}
         {% if user %}
-        <h5 class="mt-4 mb-3">Top 5 Recommended Products for <strong>{{ user }}</strong>:</h5>
+          <h5 class="mt-4 mb-3">Top 5 Recommended Products for <strong>{{ user }}</strong>:</h5>
         {% endif %}
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Brand</th>
-              <th>Manufacturer</th>
-              <th>Recommendation %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in row_data %}
-            <tr>
-              {% for col, row_ in zip(column_names, row) %}
-              <td>{{ row_ }}</td>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Brand</th>
+                <th>Manufacturer</th>
+                <th>Recommendation %</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in row_data %}
+              <tr>
+                {% for col, row_ in zip(column_names, row) %}
+                <td>{{ row_ }}</td>
+                {% endfor %}
+              </tr>
               {% endfor %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
         {% endif %}
 
         {% if message %}
@@ -84,27 +73,28 @@
       </div>
 
       <!-- Right Column: Sentiment Form -->
-      <div class="col-md-6 mb-4">
+      <div class="col-md-6 mb-4 d-flex flex-column">
         <h4 class="mb-3">Predict Review Sentiment</h4>
         <form method="post" action="/predictSentiment">
           <label for="reviewText" class="form-label">Enter Your Review</label>
-          <textarea class="form-control mb-3" name="reviewText" rows="6" id="reviewText"
-            placeholder="Write a product review..." required></textarea>
+          <textarea class="form-control mb-3" name="reviewText" rows="6" id="reviewText" placeholder="Write a product review..." required></textarea>
           <input type="submit" class="btn btn-success" value="Predict Sentiment">
         </form>
 
         {% if sentiment == 1 %}
-        <div class="alert alert-success mt-3" role="alert">Entered Review Text is predicted to be
-          <strong>Positive</strong></div>
+        <div class="alert alert-success mt-3" role="alert">
+          Entered Review Text is predicted to be <strong>Positive</strong>
+        </div>
         {% elif sentiment == 0 %}
-        <div class="alert alert-danger mt-3" role="alert">Entered Review Text is predicted to be
-          <strong>Negative</strong></div>
+        <div class="alert alert-danger mt-3" role="alert">
+          Entered Review Text is predicted to be <strong>Negative</strong>
+        </div>
         {% endif %}
       </div>
+
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
